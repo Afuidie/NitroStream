@@ -28,7 +28,10 @@ namespace Nitro_Stream.Model
         public delegate void ConnectionHandler(bool Connected);
         public event ConnectionHandler Connected;
 
-        uint currentSeq;
+        public delegate void InfosReadyHandler(string Message);
+        public event InfosReadyHandler InfosReady;
+
+		uint currentSeq;
         uint lastReadMemSeq;
         string lastReadMemFileName = null;
         public volatile int progress = -1;
@@ -108,7 +111,8 @@ namespace Nitro_Stream.Model
                             byte[] dataBuf = new byte[dataLen];
                             readNetworkStream(stream, dataBuf, dataBuf.Length);
                             string logMsg = Encoding.UTF8.GetString(dataBuf);
-                            log(logMsg);
+							InfosReady.Invoke(logMsg);
+							//log(logMsg);
                         }
                         lock (syncLock)
                         {

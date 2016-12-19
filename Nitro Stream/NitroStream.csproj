@@ -63,8 +63,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\CaptureProcessScreen.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\NtrClient.cs" />
+    <Compile Include="Model\NtrClientInputsConverter.cs" />
+    <Compile Include="Model\ScreenCaptureProcessor.cs" />
     <Compile Include="Model\Updater.cs" />
     <Compile Include="Model\ViewSettings.cs" />
     <Compile Include="Resources\Converters\BooleanToVisible.cs" />

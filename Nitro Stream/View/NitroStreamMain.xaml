@@ -9,7 +9,9 @@
         mc:Ignorable="d"
         Icon="{StaticResource ICO_Main}"
         ResizeMode="NoResize"
-        Title="Nitro Stream" SizeToContent="WidthAndHeight" MinWidth="600" MaxWidth="600">
+        Title="Pokebot" SizeToContent="WidthAndHeight" MinWidth="600" MaxWidth="600"
+		PreviewKeyDown="Window_KeyDown"
+		KeyUp="Window_KeyUp">
     <Window.DataContext>
         <ViewModel:NitroStreamViewModel />
     </Window.DataContext>
@@ -59,18 +61,31 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition />
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
             <View:Options />
-            <TextBox Grid.Row="1"
-                     MinHeight="200"
-                     MaxHeight="200"
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="auto"/>
+				</Grid.ColumnDefinitions>
+				<TextBox
+                     MinHeight="509"
+                     MaxHeight="509"
                      Visibility="{Binding ViewSettings.ShowLog, Converter={StaticResource BoolToVis}}"
                      TextWrapping="Wrap" Foreground="White" Background="Black"
                      IsReadOnly="True"
                      VerticalScrollBarVisibility="Auto"
                      Text="{Binding runningLog, Mode=OneWay}" />
-        </Grid>
+				<Image Grid.Column="2"
+					   MinHeight="509"
+					   MaxHeight="509"
+					   MinWidth="406"
+					   MaxWidth="406"
+					   Source="{Binding screen3DS, Mode=OneWay}" />
+			</Grid>
+			
+		</Grid>
         
         <!-- Footer -->
         <Border Grid.Row="3" >

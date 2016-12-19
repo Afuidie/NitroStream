@@ -25,10 +25,22 @@ namespace Nitro_Stream.View
         {
             InitializeComponent();
             this.DataContext = this.DataContext as ViewModel.NitroStreamViewModel;
+			Closing += NitroStreamMain_Closing;
             
         }
 
-        private void ConfigureViewerPath(object sender, RoutedEventArgs e)
+		private void NitroStreamMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			ViewModel.NitroStreamViewModel vm = this.DataContext as ViewModel.NitroStreamViewModel;
+			if (vm != null)
+			{
+				vm.Disconnect();
+				if (vm.NtrViewerProcess != null)
+					vm.NtrViewerProcess.Kill();
+			}
+		}
+
+		private void ConfigureViewerPath(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fd = new OpenFileDialog();
             fd.DefaultExt = "exe";
@@ -43,8 +55,8 @@ namespace Nitro_Stream.View
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.NitroStreamViewModel vm = this.DataContext as ViewModel.NitroStreamViewModel;
-            if (vm != null)
-                vm.Updater.GetUpdate();
+            //if (vm != null)
+                //vm.Updater.GetUpdate();
         }
 
         private void Donate_Click(object sender, RoutedEventArgs e)
@@ -53,5 +65,21 @@ namespace Nitro_Stream.View
             if (vm != null)
                 vm.Donate();
         }
-    }
+
+		private void Window_KeyDown(object sender, KeyEventArgs e)
+		{
+			ViewModel.NitroStreamViewModel vm = this.DataContext as ViewModel.NitroStreamViewModel;
+			if (vm != null)
+				vm.UpdateKeyboardState(e.Key, true);
+			e.Handled = true;
+		}
+
+		private void Window_KeyUp(object sender, KeyEventArgs e)
+		{
+			ViewModel.NitroStreamViewModel vm = this.DataContext as ViewModel.NitroStreamViewModel;
+			if (vm != null)
+				vm.UpdateKeyboardState(e.Key, false);
+			e.Handled = true;
+		}
+	}
 }
